@@ -39,6 +39,7 @@ public class AsyncSuspendedExperimentApplication {
         serverProperties.getCompression().setEnabled(true);
         serverProperties.getCompression().setMimeTypes(new String[] { "application/json", "text/plain" });
 
+        // simulate thread starving, by allowing only one connector thread
         serverProperties.getTomcat().setMaxConnections(2);
         serverProperties.getTomcat().setMinSpareThreads(1);
         serverProperties.getTomcat().setMaxThreads(1);

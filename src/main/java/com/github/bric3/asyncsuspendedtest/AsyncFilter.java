@@ -3,6 +3,8 @@ package com.github.bric3.asyncsuspendedtest;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -28,6 +30,29 @@ public class AsyncFilter implements Filter {
             chain.doFilter(request, response);
         } catch (IOException | ServletException e) {
         } finally {
+            if (request.isAsyncStarted()) {
+                request.getAsyncContext().addListener(new AsyncListener() {
+                    @Override
+                    public void onComplete(AsyncEvent event) {
+                        System.out.println(now() + " <-- filter [complete] : " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onTimeout(AsyncEvent event) {
+                        System.out.println(now() + " <-- filter [timeout] : " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onError(AsyncEvent event) {
+                        System.out.println(now() + " <-- filter [error] : " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onStartAsync(AsyncEvent event) {
+
+                    }
+                });
+            }
             System.out.println(now() + " <-- filter : " + Thread.currentThread().getName());
         }
     }
