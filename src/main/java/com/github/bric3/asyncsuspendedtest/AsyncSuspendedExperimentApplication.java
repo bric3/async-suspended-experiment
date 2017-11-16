@@ -19,18 +19,6 @@ public class AsyncSuspendedExperimentApplication {
         SpringApplication.run(AsyncSuspendedExperimentApplication.class, args);
     }
 
-//    @Bean
-//    public FilterRegistrationBean myFilterBean() {
-//        final FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
-//        filterRegBean.setFilter(new AsyncFilter());
-//        filterRegBean.addUrlPatterns("/*");
-//        filterRegBean.setEnabled(Boolean.TRUE);
-//        filterRegBean.setName("Meu Filter");
-//        filterRegBean.setAsyncSupported(Boolean.TRUE);
-//        return filterRegBean;
-//    }
-
-
     @Bean
     public EmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
